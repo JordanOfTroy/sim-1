@@ -13,7 +13,16 @@ module.exports = {
     },
 
     delete: (req, res) => {
-        console.log(req.params)
+        const db = req.app.get('db')
+        const {id} = req.params
+        db.delete_item([id])
+        .then(inventory => {
+            res.status(200).send(inventory)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).send('SHH! The gnomes are sleeping.')
+        })
     },
 
     addItem: (req, res) => {
@@ -32,10 +41,21 @@ module.exports = {
 
     },
 
-    // updateProduct: (req, res) => {
-    //     let {str, index} = req.body
-    //     console.log({str, index})
-    // }
+    updateProduct: (req, res) => {
+        console.log(req.body)
+        const db = req.app.get('db')
+        const {pName, pPrice, imgURL, id} = req.body
+        db.update([pName, pPrice, imgURL, id])
+        .then(inventory => {
+            res.status(200).send(inventory)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).send(err)
+        })
+
+    
+    }
 
 
 

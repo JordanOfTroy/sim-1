@@ -2,9 +2,9 @@ import React from 'react'
 import '../../App.css'
 
 function Product (props) {
-   let {index, productName, price, imageURL,} = props
+   let {productid, productName, price, imageURL,} = props
 
-console.log('product',props)
+// console.log('product',props)
     return (
         <div >
             <div>
@@ -14,10 +14,10 @@ console.log('product',props)
                 <h2>{productName}</h2>
                 <h2>Price: ${price}</h2> 
                 <button
-                    onClick = {props.updateProduct}
+                    onClick = {() => props.updateProduct(props)}
                 >Edit</button>
                 <button
-                onClick = {() => {props.delete(index)}}
+                onClick = {() => {props.delete(productid)}}
                 >Delete</button> 
             </div>
             

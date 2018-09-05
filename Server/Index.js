@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.get('/api/inventory', ctrl.getTheInventory)
 app.post('/api/product', ctrl.addItem)
 app.delete('/api/products/:id', ctrl.delete)
-// app.put('/api/product', ctrl.updateProduct)
+app.put('/api/product', ctrl.updateProduct)
 
 
 //********************************************************************* */

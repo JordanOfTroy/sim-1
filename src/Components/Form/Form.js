@@ -13,6 +13,17 @@ class Form extends Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    componentDidUpdate = (prevProps) => {
+        if (prevProps.activeProduct.productid !== this.props.activeProduct.productid) {
+            const {imageURL, productName, price} = this.props.activeProduct
+            this.setState({
+                imgURL: imageURL,
+                pName: productName,
+                pPrice: price
+            })
+        }
+    }
+
     handleChange (val) {
         this.setState({
             [val.target.name]: val.target.value,
@@ -33,10 +44,36 @@ class Form extends Component {
     
     }
 
+    handelAdd = () => {
+        let {imgURL, pName, pPrice} = this.state
+        // console.log(pName)
+        this.props.addToInventory(imgURL, pName, pPrice)
+         this.setState({
+                imgURL: '',
+                pName: '',
+                pPrice: ''
+        })
+    }
+
+    handleButtonPush=()=>{
+        let {imgURL, pName, pPrice} = this.state
+        let updatedInfo = {
+            imgURL,
+            pName,
+            pPrice,
+            id: this.props.activeProduct.productid
+        }
+
+        !this.addButtonToggle
+        ?
+        this.props.editProduct(updatedInfo)
+        :
+        this.handelAdd()
+    }
     
     
     render () {
-        // console.log('hi', this.state)
+        console.log('form', this.props)
         return (
             <div>
                 <h1>Form</h1>
@@ -67,17 +104,7 @@ class Form extends Component {
                     >Cancel
                     </button>
                     <button
-                        onClick = {() => {
-                            let {imgURL, pName, pPrice} = this.state
-                            // console.log(pName)
-                            this.props.addToInventory(imgURL, pName, pPrice)
-                             this.setState({
-                                    imgURL: '',
-                                    pName: '',
-                                    pPrice: ''
-                            })
-                            
-                        }}
+                        onClick = {this.handleButtonPush}
                     >{
                         this.props.addButtonToggle
                         ?
